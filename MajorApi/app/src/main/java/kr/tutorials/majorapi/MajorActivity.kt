@@ -28,14 +28,14 @@ val majorBinding get() = mBinding!!
 
 class MajorActivity : AppCompatActivity() {
 
+    // 화면을 보여주는, 변경하는 함수
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMajorBinding.inflate(layoutInflater)
         setContentView(majorBinding.root)
 
-        // 검색 결과가 존재하지 않을 때 프래그먼트를 보여줌
+        // 검색 결과가 존재하지 않을 때 프래그먼트
         supportFragmentManager.beginTransaction().add(R.id.BaseFrameFragment, BlankFragment()).commit()
-
 
         // 프로세스 작동 순서
         // 대학 유형 선택 selectUnivType
@@ -49,9 +49,11 @@ class MajorActivity : AppCompatActivity() {
         // 리사이클러뷰에 뷰 연결
         majorBinding.MajorNameRV.layoutManager = LinearLayoutManager(this)
 
-        majorBinding. {
-            supportFragmentManager.beginTransaction().add(R.id.BaseFrameFragment, MajorSummary()).commit()
+        majorBinding.radioButtonCollege.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.BaseFrameFragment, MajorSummary()).commit()
         }
+
+
     }
 }
 
@@ -64,10 +66,19 @@ private fun selectUnivType() {
 
             // 선택에 따른 엔드포인트 변화
             R.id.radioButton_Univ -> {
+                UnivType = true
+                // 이전에 선택한 학과 목록이 나오지 않도록 초기화
+                selectedMajor = -1
+                majorBinding.radiogroupMajorType.clearCheck()
+                
                 selectMajorType()
+
             }
             R.id.radioButton_College -> {
                 UnivType = false
+                // 이전에 선택한 학과 목록이 나오지 않도록 초기화
+                selectedMajor = -1
+                majorBinding.radiogroupMajorType.clearCheck()
                 selectMajorType()
             }
         }
@@ -78,7 +89,7 @@ private fun selectUnivType() {
 fun selectMajorType() {
 
     //전공 계열을 선택하면 관련 과목명을 불러옴
-    majorBinding.MajorType.setOnCheckedChangeListener { _, i ->
+    majorBinding.radiogroupMajorType.setOnCheckedChangeListener { _, i ->
         println("전공 유형 버튼 선택되는 중")
         when (i) {
             R.id.radioButton_humanities -> majorTypeName = MajorSubject["인문계열"]
@@ -151,6 +162,7 @@ fun getListData(MajorData: Call<DatasetCareernetList>) {
                     majorNumbList.add(tempJsonList.getJSONObject(i).getString("majorSeq"))
                 }
 
+                println("학과명 $majorNameList")
                 // 리사이클러뷰 어댑터에 리스트 전달
                majorBinding.MajorNameRV.adapter = RecyclerViewAdapter(majorNameList, majorNumbList)
 
@@ -191,6 +203,7 @@ fun getSpecificData(MajorData: Call<DatasetCareernetSpecific>) {
                 println("변수에 값 할당")
                 majorSummary = tempJsonList.getJSONObject(0).getString("summary")
                 majorInterest = tempJsonList.getJSONObject(0).getString("interest")
+
 
 
             } else {

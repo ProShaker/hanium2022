@@ -9,16 +9,16 @@ object UrlSet {
     const val Endpoint_URL_Careernet = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list"
 
     // 커리어넷 API URL(일반대학 리스트 엔드포인트)
-    const val Endpoint_Careernet_List_Univ = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ"
+    const val Endpoint_Careernet_List_Univ = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=univ&thisPage=1&perPage=114"
 
     // 커리어넷 API URL(전문대학 리스트 엔드포인트)
-    const val Endpoint_Careernet_List_College = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=college"
+    const val Endpoint_Careernet_List_College = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR&contentType=json&gubun=univ_list&univSe=college&thisPage=1&perPage=114"
 
     // 커리어넷 API URL(일반대학 상세 엔드포인트)
-    const val Endpoint_Careernet_Specific_Univ = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR_VIEW&contentType=json&gubun=univ_list&univSe=univ"
+    const val Endpoint_Careernet_Specific_Univ = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR_VIEW&contentType=json&gubun=univ_list&univSe=univ&thisPage=1&perPage=114"
 
     // 커리어넷 API URL(전문대학 상세 엔드포인트)
-    const val Endpoint_Careernet_Specific_College = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR_VIEW&contentType=json&gubun=univ_list&univSe=college"
+    const val Endpoint_Careernet_Specific_College = "getOpenApi?apiKey=b80cf8532c4e33c60ff8cf4c67b7962c&svcType=api&svcCode=MAJOR_VIEW&contentType=json&gubun=univ_list&univSe=college&thisPage=1&perPage=114"
 
 }
 
@@ -48,6 +48,9 @@ var UnivType : Boolean = true
 
 // 프래그먼트 작동을 알리는 변수
 var fragmentActivate  = false
+
+// 선택된 전공의 인덱스를 저장하는 변수
+var selectedMajor = -1
 
 // API 에서 불러온 데이터를 저장하는 리스트
 var majorNameList : MutableList<String> = mutableListOf()

@@ -14,8 +14,7 @@ import kr.tutorials.majorapi.databinding.FragmentMajorSummaryBinding
 class RecyclerViewAdapter(private val majorNameList: List<String>, private val majorNumbList: List<String>) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
-    // 선택된 전공의 인덱스를 저장하는 변수
-    var selectedMajor = -1
+
 
     fun setSelection(position: Int) {
         majorName = majorNameList[position]
@@ -45,9 +44,6 @@ class RecyclerViewAdapter(private val majorNameList: List<String>, private val m
                     getSpecificData(retrofitInstance().getUnivMajorSpecific(majorSeqNumb))
                 else
                     getSpecificData(retrofitInstance().getCollegeMajorSpecific(majorSeqNumb))
-
-
-//                Fra.beginTransaction().add(R.id.BaseFrameFragment, MajorSummary()).commit()
             }
             radioButton.setOnClickListener(clickListener)
         }
@@ -70,6 +66,11 @@ class RecyclerViewAdapter(private val majorNameList: List<String>, private val m
         viewHolder.bind(majorNameList[position])
         viewHolder.itemView.findViewById<RadioButton>(R.id.MajorNameRow_radioButton).isChecked =
             position == selectedMajor
+
+        majorBinding.radiogroupUnivType.setOnClickListener{
+            println("이거 실행되고있는거냐?")
+            setSelection(-1)
+        }
     }
 
     override fun getItemCount(): Int {

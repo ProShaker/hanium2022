@@ -51,8 +51,7 @@ class MajorSummary : Fragment(R.layout.fragment_major_summary) {
 
         summaryBinding.MajorSummaryTV.text = majorName
         summaryBinding.MajorSummaryTV.text = majorSummary
-        summaryBinding.MajorInterestTV.text = majorInterest
-
+//        summaryBinding.MajorInterestTV.text = majorInterest
 
     }
 
