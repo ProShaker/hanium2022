@@ -39,8 +39,6 @@ interface APIMajor {
 }
 
 // fragmentPrinter 와 fragmentCounter 를 연결시키는 인터페이스
-interface FragmentEventListener {
-    fun onEvent()
-    fun setFragment()
-    fun setFragmentTextview()
+interface EventListener {
+    fun onEvent(count: Int)
 }

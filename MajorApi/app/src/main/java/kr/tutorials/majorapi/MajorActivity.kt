@@ -7,7 +7,6 @@ import Var_Set.UrlSet.BASE_URL_Careernet
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -49,10 +48,8 @@ class MajorActivity : AppCompatActivity() {
         // 리사이클러뷰에 뷰 연결
         majorBinding.MajorNameRV.layoutManager = LinearLayoutManager(this)
 
-        majorBinding.radioButtonCollege.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.BaseFrameFragment, MajorSummary()).commit()
-        }
-
+        // 프래그먼트 변경
+        EventPrinter().start()
 
     }
 }
@@ -70,7 +67,7 @@ private fun selectUnivType() {
                 // 이전에 선택한 학과 목록이 나오지 않도록 초기화
                 selectedMajor = -1
                 majorBinding.radiogroupMajorType.clearCheck()
-                
+
                 selectMajorType()
 
             }
@@ -204,8 +201,7 @@ fun getSpecificData(MajorData: Call<DatasetCareernetSpecific>) {
                 majorSummary = tempJsonList.getJSONObject(0).getString("summary")
                 majorInterest = tempJsonList.getJSONObject(0).getString("interest")
 
-
-
+                EventPrinter().start()
             } else {
                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                 Log.d(ContentValues.TAG, "onResponse 실패")
@@ -216,6 +212,30 @@ fun getSpecificData(MajorData: Call<DatasetCareernetSpecific>) {
             TODO("Not yet implemented")
         }
     })
+}
+
+class Counter(var listener: EventListener) { //생성자에서 EventListener 를속성으로 받는다
+    fun count() {
+        for (i in 1..100) {
+            if (i % 5 == 0) {
+                listener.onEvent(i)
+            }
+        }
+    }
+}
+
+class EventPrinter: EventListener {
+    override fun onEvent(count: Int) {
+        print("${count}-")
+    }
+
+    fun start(){
+        //EventListener 구현부 넘겨준다
+        //this는 EventPrinter 의미 하지만 받는 쪽에서 EventListener 만요구 -> 구현부만 넘겨준다
+        //이를 객체 지향의 다형성이라고 한다
+        val counter = Counter(this)
+        counter.count()
+    }
 }
 
 
